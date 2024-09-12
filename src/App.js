@@ -88,8 +88,8 @@ function App() {
     <div className="container">
       <h1>Plataforma de Registro de Gastos</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome do Gasto:</label>
+        <div className="form-group">
+          <label >Nome do Gasto:</label>
           <input
             type="text"
             value={nome}
@@ -98,7 +98,7 @@ function App() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Data do Gasto:</label>
           <input
             type="date"
@@ -108,7 +108,7 @@ function App() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Valor do Gasto:</label>
           <input
             type="number"
@@ -119,17 +119,17 @@ function App() {
           />
         </div>
 
-        <button type="submit">Adicionar Gasto</button>
+        <button className="add-button" type="submit">Adicionar Gasto</button>
       </form>
 
       <h2>Gastos Registrados:</h2>
       <ul>
         {gastos.map((gasto) => (
           <li key={gasto.id}>
-            <span><strong>Nome:</strong> {gasto.nome}</span><br/>
-            <span><strong>Data:</strong> {gasto.data}</span><br/>
+            <span><strong>Nome:</strong> {gasto.nome}</span>
+            <span><strong>Data:</strong> {gasto.data}</span>
             <span><strong>Valor:</strong> R${gasto.valor.toFixed(2)}</span>
-            <button onClick={() => handleRemove(gasto.id)}>Remover</button>
+            <button className="remove-button" onClick={() => handleRemove(gasto.id)}>Remover</button>
           </li>
         ))}
       </ul>
