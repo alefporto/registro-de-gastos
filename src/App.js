@@ -8,16 +8,31 @@ function App() {
   const [valor, setValor] = useState('');
 
   // Estados para armazenar os gastos e o total
-  const [gastos, setGastos] = useState([]);
+  const [gastos, setGastos] = useState(tempf());
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    console.log('Renderização do componente');
-  }, []);
+  function tempf() {
+    const gastosSalvos = localStorage.getItem('gastos');
 
+    console.log('Dados carregados do Local Storage:', gastosSalvos);
+    if (gastosSalvos) {
+      try {
+        const gastosParsed = JSON.parse(gastosSalvos);
+        // Verificar se os dados carregados são um array
+        if (Array.isArray(gastosParsed)) {
+          return gastosParsed
+        } else {
+          console.error('Dados no Local Storage não são um array.');
+        }
+      } catch (error) {
+        console.error('Erro ao parsear dados do Local Storage:', error);
+      }
+    }
+  }
   // Função para carregar os dados do Local Storage quando o componente for montado
   useEffect(() => {
     const gastosSalvos = localStorage.getItem('gastos');
+
     console.log('Dados carregados do Local Storage:', gastosSalvos);
     if (gastosSalvos) {
       try {
@@ -58,7 +73,7 @@ function App() {
   const handleRemove = (id) => {
     // Filtra a lista de gastos para remover o item com o id correspondente
     const novosGastos = gastos.filter((gasto) => gasto.id !== id);
-    
+
     // Atualiza o estado com a nova lista de gastos
     setGastos(novosGastos);
   };
@@ -66,7 +81,7 @@ function App() {
   // Função que será chamada ao submeter o formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Criar um novo objeto de gasto
     const novoGasto = {
       id: Date.now(),
